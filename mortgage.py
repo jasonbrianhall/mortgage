@@ -53,7 +53,7 @@ additionalpayment = float(additionalpayment)
 
 table = mortgage_calculator(principal, rate, years, additionalpayment)
 
-print("\n\n\n{:<12}{:<12}{:<12}{:<12}{:<12}\t{:<12}".format("Month", "Payment", "Principal", "Interest", "Remaining", "Total Interest Paid"))
+print("\n\n\n{:<12}\t{:<12}\t{:<12}\t{:<12}\t{:<12}\t{:<12}".format("Month", "Payment", "Principal", "Interest", "Remaining", "Total Interest Paid"))
 totalinterestpaid=0
 for payment in table:
     month               = "{:03d}".format(payment['month'])
@@ -62,4 +62,4 @@ for payment in table:
     interest_paid       = '${:,.2f}'.format(float(payment['interest_paid']))
     remaining_balance   = '${:,.2f}'.format(float(payment['remaining_balance']))
     total_interest_paid = '${:,.2f}'.format(float(payment['total_interest_paid']))
-    print("{:<12}{:<12}{:<12}{:<12}{:<12}\t{:<12}".format(month, payment_amount, principal_paid, interest_paid, remaining_balance, total_interest_paid))
+    print("{:<12}\t{:<12}\t{:<12}\t{:<12}\t{:<12}\t{:<12}".format(month, payment_amount, principal_paid, interest_paid, remaining_balance, total_interest_paid))
