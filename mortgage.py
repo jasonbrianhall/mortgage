@@ -46,7 +46,12 @@ years = int(years)
 
 table = mortgage_calculator(principal, rate, years)
 
-print("\n\n\n{:<12}{:<12}{:<12}{:<12}{:<12}{:<12}".format("Month", "Payment", "Principal", "Interest", "Remaining", "Total Interest"))
+print("\n\n\n{:<12}{:<12}{:<12}{:<12}{:<12}{:<12}".format("Month", "Payment", "Principal", "Interest", "Remaining", "Total Interest Paid"))
 totalinterestpaid=0
 for payment in table:
-    print("{:<12}{:<12}{:<12}{:<12}{:<12}{:<12}".format(payment['month'], payment['monthly_payment'], payment['principal_paid'], payment['interest_paid'], payment['remaining_balance'], payment['total_interest_paid']))
+    payment_amount      = '${:,.2f}'.format(float(payment['monthly_payment']))
+    principal_paid      = '${:,.2f}'.format(float(payment['principal_paid']))
+    interest_paid       = '${:,.2f}'.format(float(payment['interest_paid']))
+    remaining_balance   = '${:,.2f}'.format(float(payment['remaining_balance']))
+    total_interest_paid = '${:,.2f}'.format(float(payment['total_interest_paid']))
+    print("{:<12}{:<12}{:<12}{:<12}{:<12}{:<12}".format(payment['month'], payment_amount, principal_paid, interest_paid, remaining_balance, total_interest_paid))
