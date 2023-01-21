@@ -45,7 +45,7 @@ while not bool(re.match("^[0-9]+$", years)):
 years = int(years)
 
 additionalpayment = input("\nPlease enter any additional payment above the minimum (enter 0 for none): ")
-while not bool(re.match("^[0-9]+(\.[0-9]{1,2})?$", additionalpayment)):
+while not bool(re.match(r'^-?[0-9]+(\.[0-9]{1,2})?$', additionalpayment)):
     years = input("Invalid input. Please enter an additional payment: ")
 additionalpayment = float(additionalpayment)
 
