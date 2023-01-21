@@ -3,10 +3,10 @@
 import math
 import re
 
-def mortgage_calculator(principal, rate, years):
+def mortgage_calculator(principal, rate, years, additionalPayment=0):
     r = rate/12/100
     n = years*12
-    monthly_payment = principal*((r*(1+r)**n)/(((1+r)**n)-1))
+    monthly_payment = principal*((r*(1+r)**n)/(((1+r)**n)-1))+additionalPayment
     remaining_balance = principal
     interest_paid = 0
     payments = []
@@ -29,12 +29,12 @@ def mortgage_calculator(principal, rate, years):
 
 print("*"*12, " Welcome to the Mortgage Caculator ", "*"*12, "\n\n")
 
-principal = input("Please enter the principal of the mortgage: ")
+principal = input("Please enter the principal of the mortgage (e.g. 100000): ")
 while not bool(re.match("^[0-9]+(\.[0-9]{1,2})?$", principal)):
     principal = input("Invalid input. Please enter a valid principal amount: ")
 principal = float(principal)
 
-rate = input("\nPlease enter the interest rate of the mortgage: ")
+rate = input("\nPlease enter the interest rate of the mortgage (e.g. 2.25 for 2.25%): ")
 while not bool(re.match("^[0-9]+(\.[0-9]{1,2})?$", rate)):
     rate = input("Invalid input. Please enter a valid interest rate: ")
 rate = float(rate)
@@ -44,7 +44,14 @@ while not bool(re.match("^[0-9]+$", years)):
     years = input("Invalid input. Please enter a valid number of years: ")
 years = int(years)
 
-table = mortgage_calculator(principal, rate, years)
+additionalpayment = input("\nPlease enter any additional payment above the minimum (enter 0 for none): ")
+while not bool(re.match("^[0-9]+(\.[0-9]{1,2})?$", additionalpayment)):
+    years = input("Invalid input. Please enter an additional payment: ")
+additionalpayment = float(additionalpayment)
+
+
+
+table = mortgage_calculator(principal, rate, years, additionalpayment)
 
 print("\n\n\n{:<12}{:<12}{:<12}{:<12}{:<12}\t{:<12}".format("Month", "Payment", "Principal", "Interest", "Remaining", "Total Interest Paid"))
 totalinterestpaid=0
