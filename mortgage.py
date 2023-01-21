@@ -27,24 +27,26 @@ def mortgage_calculator(principal, rate, years):
         })
     return payments
 
+print("*"*12, " Welcome to the Mortgage Caculator ", "*"*12, "\n\n")
+
 principal = input("Please enter the principal of the mortgage: ")
 while not bool(re.match("^[0-9]+(\.[0-9]{1,2})?$", principal)):
     principal = input("Invalid input. Please enter a valid principal amount: ")
 principal = float(principal)
 
-rate = input("Please enter the interest rate of the mortgage: ")
+rate = input("\nPlease enter the interest rate of the mortgage: ")
 while not bool(re.match("^[0-9]+(\.[0-9]{1,2})?$", rate)):
     rate = input("Invalid input. Please enter a valid interest rate: ")
 rate = float(rate)
 
-years = input("Please enter the number of years of the mortgage: ")
+years = input("\nPlease enter the number of years of the mortgage: ")
 while not bool(re.match("^[0-9]+$", years)):
     years = input("Invalid input. Please enter a valid number of years: ")
 years = int(years)
 
 table = mortgage_calculator(principal, rate, years)
 
-print("{:<12}{:<12}{:<12}{:<12}{:<12}{:<12}".format("Month", "Payment", "Principal", "Interest", "Remaining", "Total Interest"))
+print("\n\n\n{:<12}{:<12}{:<12}{:<12}{:<12}{:<12}".format("Month", "Payment", "Principal", "Interest", "Remaining", "Total Interest"))
 totalinterestpaid=0
 for payment in table:
     print("{:<12}{:<12}{:<12}{:<12}{:<12}{:<12}".format(payment['month'], payment['monthly_payment'], payment['principal_paid'], payment['interest_paid'], payment['remaining_balance'], payment['total_interest_paid']))
