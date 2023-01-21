@@ -1,4 +1,5 @@
 import math
+import re
 
 def mortgage_calculator(principal, interest_rate, years):
     # calculate the monthly interest rate
@@ -10,7 +11,7 @@ def mortgage_calculator(principal, interest_rate, years):
     # initialize the remaining balance
     remaining_balance = principal
     # print the header
-    print("Year\tRemaining Balance\tYearly Payment")
+    print("Year\tRemaining Balance\tYearly Payment\tMonthly Payment\tInterest per year")
     # loop through each year
     for i in range(1, years+1):
         # loop through each month
@@ -22,8 +23,41 @@ def mortgage_calculator(principal, interest_rate, years):
             # update the remaining balance
             remaining_balance -= principal_paid
         # print the year, remaining balance, and yearly payment
-        print(i, "\t", round(remaining_balance, 2), "\t\t", round(minimum_payment*12, 2))
+        print(i, "\t", round(remaining_balance, 2), "\t\t", round(minimum_payment*12, 2), "\t", round(minimum_payment, 2), "\t", round(interest*12,2))
 
 # example usage
-mortgage_calculator(100000, 0.05, 30)
+
+exittheloop=False
+
+while exittheloop==False:
+    print("How much is the initial principal:  ", end="")
+    choice=input()
+    if re.match("[0-9]+?(\.[0-9][0-o]?)?", choice):
+        principal=float(choice)
+        exittheloop=True
+    else:
+        print("** Not a valid float")
+    
+exittheloop=False
+while exittheloop==False:
+    print("How much is the interest rate:  ", end="")
+    choice=input()
+    if re.match("[0-9]+?(\.[0-9][0-o]?)?", choice):
+        interestrate=float(choice)/100
+        exittheloop=True
+    else:
+        print("** Not a valid float")
+
+exittheloop=False
+while exittheloop==False:
+    print("How many years does this mortgage last:  ", end="")
+    choice=input()
+    if re.match("[0-9]+", choice):
+        numberofyears=int(choice)
+        exittheloop=True
+    else:
+        print("** Not a valid number of years")
+
+print(principal, interestrate, numberofyears)
+mortgage_calculator(principal, interestrate, numberofyears)
 
