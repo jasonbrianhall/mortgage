@@ -1,63 +1,44 @@
 import math
 import re
 
-def mortgage_calculator(principal, interest_rate, years):
-    # calculate the monthly interest rate
-    monthly_rate = interest_rate / 12
-    # calculate the total number of payments
-    total_payments = years * 12
-    # calculate the minimum monthly payment
-    minimum_payment = (principal * monthly_rate) / (1 - math.pow((1 + monthly_rate), -total_payments))
-    # initialize the remaining balance
+def mortgage_calculator(principal, rate, years):
+    r = rate/12/100
+    n = years*12
+    monthly_payment = principal*((r*(1+r)**n)/(((1+r)**n)-1))
     remaining_balance = principal
-    # print the header
-    print("Year\tRemaining Balance\tYearly Payment\tMonthly Payment\tInterest per year")
-    # loop through each year
-    for i in range(1, years+1):
-        # loop through each month
-        for j in range(1, 13):
-            # calculate the interest for the month
-            interest = remaining_balance * monthly_rate
-            # calculate the principal for the month
-            principal_paid = minimum_payment - interest
-            # update the remaining balance
-            remaining_balance -= principal_paid
-        # print the year, remaining balance, and yearly payment
-        print(i, "\t", round(remaining_balance, 2), "\t\t", round(minimum_payment*12, 2), "\t", round(minimum_payment, 2), "\t", round(interest*12,2))
+    interest_paid = 0
+    payments = []
+    for i in range(1, n+1):
+        interest = remaining_balance * r
+        principal_paid = monthly_payment - interest
+        remaining_balance -= principal_paid
+        interest_paid += interest
+        payments.append({
+            'month': i, 
+            'monthly_payment': round(monthly_payment, 2), 
+            'principal_paid': round(principal_paid, 2),
+            'interest_paid': round(interest, 2),
+            'remaining_balance': round(remaining_balance, 2)
+        })
+    return payments
 
-# example usage
+principal = input("Please enter the principal of the mortgage: ")
+while not bool(re.match("^[0-9]+(\.[0-9]{1,2})?$", principal)):
+    principal = input("Invalid input. Please enter a valid principal amount: ")
+principal = float(principal)
 
-exittheloop=False
+rate = input("Please enter the interest rate of the mortgage: ")
+while not bool(re.match("^[0-9]+(\.[0-9]{1,2})?$", rate)):
+    rate = input("Invalid input. Please enter a valid interest rate: ")
+rate = float(rate)
 
-while exittheloop==False:
-    print("How much is the initial principal:  ", end="")
-    choice=input()
-    if re.match("[0-9]+?(\.[0-9][0-o]?)?", choice):
-        principal=float(choice)
-        exittheloop=True
-    else:
-        print("** Not a valid float")
-    
-exittheloop=False
-while exittheloop==False:
-    print("How much is the interest rate:  ", end="")
-    choice=input()
-    if re.match("[0-9]+?(\.[0-9][0-o]?)?", choice):
-        interestrate=float(choice)/100
-        exittheloop=True
-    else:
-        print("** Not a valid float")
+years = input("Please enter the number of years of the mortgage: ")
+while not bool(re.match("^[0-9]+$", years)):
+    years = input("Invalid input. Please enter a valid number of years: ")
+years = int(years)
 
-exittheloop=False
-while exittheloop==False:
-    print("How many years does this mortgage last:  ", end="")
-    choice=input()
-    if re.match("[0-9]+", choice):
-        numberofyears=int(choice)
-        exittheloop=True
-    else:
-        print("** Not a valid number of years")
+table = mortgage_calculator(principal, rate, years)
 
-print(principal, interestrate, numberofyears)
-mortgage_calculator(principal, interestrate, numberofyears)
-
+print("{:<12}{:<12}{:<12}{:<12}{:<12}".format("Month", "Payment", "Principal", "Interest", "Remaining"))
+for payment in table:
+    print("{:<12}{:<12}{:<12}{:<12}{:<12}".format(payment['month'], payment['monthly_payment'], payment['principal_paid'], payment['interest_paid'], payment['remaining_balance']))
